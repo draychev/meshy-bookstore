@@ -12,8 +12,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/draychev/go-toolbox/pkg/logger"
 	"github.com/draychev/go-toolbox/pkg/envvar"
+	"github.com/draychev/go-toolbox/pkg/logger"
 )
 
 // BookBuyerPurchases is all of the books that the bookbuyer has bought
@@ -260,6 +260,7 @@ func fetch(url string) (responseCode int, identity string) {
 
 	fmt.Printf("\nFetching %s\n", req.URL)
 	fmt.Printf("Request Headers: %v\n", req.Header)
+	client.Timeout = 1 * time.Second
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Printf("Error fetching %s: %s\n", url, err)
