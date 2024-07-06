@@ -7,6 +7,8 @@ kubectl create namespace bookstore || true
 kubectl create namespace bookbuyer || true
 kubectl create namespace bookthief || true
 kubectl create namespace bookwarehouse || true
+kubectl create namespace bookwatcher || true
+kubectl create namespace tcp-demo || true
 
 
 echo "Create the bookbuyer service account and deployment:"
