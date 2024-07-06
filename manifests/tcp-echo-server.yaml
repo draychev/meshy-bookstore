@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: tcp-echo
-  namespace: tcp-demo
+  namespace: tcp-echo-server
   labels:
     app: tcp-echo
 spec:
@@ -21,7 +21,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: tcp-echo
-  namespace: tcp-demo
+  namespace: tcp-echo-server
 
 ---
 
@@ -30,7 +30,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tcp-echo-v1
-  namespace: tcp-demo
+  namespace: tcp-echo-server
   labels:
     app: tcp-echo
     version: v1

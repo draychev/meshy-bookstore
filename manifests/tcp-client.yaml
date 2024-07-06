@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: tcp-client
-  namespace: tcp-demo
+  namespace: tcp-client
 
 ---
 
@@ -12,7 +12,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tcp-client-v1
-  namespace: tcp-demo
+  namespace: tcp-client
   labels:
     app: tcp-client
     version: v1
@@ -34,4 +34,4 @@ spec:
         image: "draychev/tcp-client:latest"
         imagePullPolicy: Always
         command: ["/tcp-client"]
-        args: [ "--server-address", "tcp-echo:9000" ]
+        args: [ "--server-address", "tcp-echo-server.tcp-echo-server.cluster.local:9000" ]
