@@ -260,7 +260,14 @@ func fetch(url string) (responseCode int, identity string) {
 
 	fmt.Printf("\nFetching %s\n", req.URL)
 	fmt.Printf("Request Headers: %v\n", req.Header)
-	client.Timeout = 1 * time.Second
+
+	timeoutStr := envvar.GetEnv("TIMEOUT", "1")
+	timeoutInt, err := strconv.Atoi(timeoutStr)
+	if err != nil {
+		log.Error().Err(err).Msgf("Invalid timeout value: %s", timeoutStr)
+		timeoutInt = 1 // Default to 1 second on error
+	}
+	client.Timeout = time.Duration(timeoutInt) * time.Second
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Printf("Error fetching %s: %s\n", url, err)
