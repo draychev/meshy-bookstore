@@ -1,0 +1,37 @@
+# Create tcp-client service account
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tcp-client
+  namespace: tcp-demo
+
+---
+
+# Create tcp-client deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tcp-client-v1
+  namespace: tcp-demo
+  labels:
+    app: tcp-client
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tcp-client
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: tcp-client
+        version: v1
+    spec:
+      serviceAccountName: tcp-client
+      containers:
+      - name: tcp-client
+        image: "draychev/tcp-client:latest-main"
+        imagePullPolicy: Always
+        command: ["/tcp-client"]
+        args: [ "--server-address", "tcp-echo:9000" ]
