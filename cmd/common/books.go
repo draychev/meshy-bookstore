@@ -114,6 +114,13 @@ func RestockBooks(amount int, headers map[string]string) {
 
 	log.Info().Msgf("RestockBooks: Posted to %s with headers %v", req.URL, req.Header)
 
+	timeoutStr := envvar.GetEnv("TIMEOUT", "1")
+	timeoutInt, err := strconv.Atoi(timeoutStr)
+	if err != nil {
+		log.Error().Err(err).Msgf("Invalid timeout value: %s", timeoutStr)
+		timeoutInt = 1 // Default to 1 second on error
+	}
+
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Error().Err(err).Msgf("RestockBooks: Error posting to %s", chargeAccountURL)
