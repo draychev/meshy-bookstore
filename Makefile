@@ -33,7 +33,7 @@ build-images: $(BINARIES:%=build-%)
 
 $(BINARIES:%=build-%): build-%:
 	@echo "Building Docker image for $*"
-	docker build -t $(DOCKER_USER)/$*:latest -f Dockerfile.$* .
+	docker build -t $(DOCKER_USER)/$*:latest -f ./dockerfiles/Dockerfile.$* .
 
 # Push Docker images to Docker Hub
 .PHONY: push-images
@@ -42,21 +42,6 @@ push-images: $(BINARIES:%=push-%)
 $(BINARIES:%=push-%): push-%: build-%
 	@echo "Pushing Docker image for $* to Docker Hub"
 	docker push $(DOCKER_USER)/$*:latest
-
-# A general rule for building each binary's Dockerfile
-.PHONY: build-bookbuyer build-bookstore build-bookwarehouse build-bookthief build-bookwatcher
-build-bookbuyer: Dockerfile.bookbuyer
-build-bookstore: Dockerfile.bookstore
-build-bookwarehouse: Dockerfile.bookwarehouse
-build-bookthief: Dockerfile.bookthief
-build-bookwatcher: Dockerfile.bookwatcher
-
-# A general rule for Dockerfiles
-Dockerfile.%:
-	@echo "Creating Dockerfile for $*"
-	@echo "FROM golang:latest" > Dockerfile.$*
-	@echo "COPY ./bin/$* /$*" >> Dockerfile.$*
-	@echo 'ENTRYPOINT ["/$*"]' >> Dockerfile.$*
 
 # Cleanup generated Dockerfiles (optional)
 .PHONY: clean

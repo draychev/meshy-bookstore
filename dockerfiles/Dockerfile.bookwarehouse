@@ -4,7 +4,7 @@ FROM debian:latest
 # Install necessary utilities
 RUN apt-get update && apt-get install -y \
     tcpdump \
-    netcat \
+    netcat-traditional \
     dnsutils \
     traceroute \
     mc \
