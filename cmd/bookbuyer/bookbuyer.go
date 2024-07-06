@@ -17,7 +17,7 @@ import (
 
 	"github.com/draychev/go-toolbox/pkg/envvar"
 	"github.com/draychev/go-toolbox/pkg/logger"
-	"github.com/draychev/meshy-bookstore/cmd/common"
+	"github.com/draychev/meshy-bookstore/pkg/common"
 )
 
 const (

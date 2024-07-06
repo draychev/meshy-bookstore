@@ -5,7 +5,7 @@ SRC_DIR := ./cmd
 BIN_DIR := ./bin
 
 # List of all commands
-COMMANDS := bookbuyer bookstore bookwarehouse bookthief bookwatcher common database tcp-client tcp-echo-server
+COMMANDS := bookbuyer bookstore bookwarehouse bookthief bookwatcher tcp-client tcp-echo-server
 
 # Ensure the output directory exists
 $(BIN_DIR):

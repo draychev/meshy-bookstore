@@ -120,7 +120,7 @@ func RestockBooks(amount int, headers map[string]string) {
 		log.Error().Err(err).Msgf("Invalid timeout value: %s", timeoutStr)
 		timeoutInt = 1 // Default to 1 second on error
 	}
-
+	client.Timeout = time.Duration(timeoutInt) * time.Second
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Error().Err(err).Msgf("RestockBooks: Error posting to %s", chargeAccountURL)
