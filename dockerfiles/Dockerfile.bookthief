@@ -16,13 +16,13 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR 
 
 # Copy the binary into the container
-COPY ./bin/bookthief /app/bookthief
+COPY ./bin/bookthief /bookthief
 
 # Expose any required ports (optional, adjust as needed)
 # EXPOSE 8080
 
 # Define the command to run the binary
-ENTRYPOINT ["/app/bookthief"]
+ENTRYPOINT ["/bookthief"]
