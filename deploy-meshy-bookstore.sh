@@ -10,19 +10,19 @@ kubectl create namespace bookwarehouse || true
 
 
 echo "Create the bookbuyer service account and deployment:"
-kubectl apply -f https://github.com/draychev/meshy-bookstore/blob/main/manifests/bookbuyer.yaml
+kubectl apply -f https://raw.githubusercontent.com/draychev/meshy-bookstore/main/manifests/bookbuyer.yaml
 
 echo "Create the bookthief service account and deployment:"
-kubectl apply -f https://github.com/draychev/meshy-bookstore/blob/main/manifests/bookthief.yaml
+kubectl apply -f https://raw.githubusercontent.com/draychev/meshy-bookstore/main/manifests/bookthief.yaml
 
 echo "Create the bookstore service account, service, and deployment:"
-kubectl apply -f https://github.com/draychev/meshy-bookstore/blob/main/manifests/bookstore.yaml
+kubectl apply -f https://raw.githubusercontent.com/draychev/meshy-bookstore/main/manifests/bookstore.yaml
 
 echo "Create the bookwarehouse service account, service, and deployment:"
-kubectl apply -f https://github.com/draychev/meshy-bookstore/blob/main/manifests/bookwarehouse.yaml
+kubectl apply -f https://raw.githubusercontent.com/draychev/meshy-bookstore/main/manifests/bookwarehouse.yaml
 
 echo "Create the mysql service account, service, and stateful set:"
-kubectl apply -f https://github.com/draychev/meshy-bookstore/blob/main/manifests/mysql.yaml
+kubectl apply -f https://raw.githubusercontent.com/draychev/meshy-bookstore/main/manifests/mysql.yaml
 
 
 echo "Checkpoint"
