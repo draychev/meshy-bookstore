@@ -24,6 +24,16 @@ kubectl apply -f https://raw.githubusercontent.com/draychev/meshy-bookstore/main
 echo "Create the mysql service account, service, and stateful set:"
 kubectl apply -f https://raw.githubusercontent.com/draychev/meshy-bookstore/main/manifests/mysql.yaml
 
+echo "Create the bookwatcher service account, service, and deployment:"
+kubectl apply -f https://raw.githubusercontent.com/draychev/meshy-bookstore/main/manifests/bookwatcher.yaml
+
+echo "Create the tcp-client service account, service, and deployment:"
+kubectl apply -f https://raw.githubusercontent.com/draychev/meshy-bookstore/main/manifests/tcp-client.yaml
+
+echo "Create the tcp-echo-server service account, service, and deployment:"
+kubectl apply -f https://raw.githubusercontent.com/draychev/meshy-bookstore/main/manifests/tcp-echo-server.yaml
+
+
 
 echo "Checkpoint"
 kubectl get pods,deployments,serviceaccounts -n bookbuyer
@@ -31,3 +41,7 @@ kubectl get pods,deployments,serviceaccounts -n bookthief
 
 kubectl get pods,deployments,serviceaccounts,services,endpoints -n bookstore
 kubectl get pods,deployments,serviceaccounts,services,endpoints -n bookwarehouse
+kubectl get pods,deployments,serviceaccounts,services,endpoints -n bookwatcher
+
+kubectl get pods,deployments,serviceaccounts,services,endpoints -n tcp-client
+kubectl get pods,deployments,serviceaccounts,services,endpoints -n tcp-echo-server
