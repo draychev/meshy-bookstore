@@ -1,0 +1,58 @@
+# Create tcp-echo service
+apiVersion: v1
+kind: Service
+metadata:
+  name: tcp-echo
+  namespace: tcp-demo
+  labels:
+    app: tcp-echo
+spec:
+  ports:
+  - name: tcp
+    port: 9000
+    appProtocol: tcp
+  selector:
+    app: tcp-echo
+
+---
+
+# Create tcp-echo service account"
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tcp-echo
+  namespace: tcp-demo
+
+---
+
+# Create tcp-echo deployment"
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tcp-echo-v1
+  namespace: tcp-demo
+  labels:
+    app: tcp-echo
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tcp-echo
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: tcp-echo
+        version: v1
+    spec:
+      serviceAccountName: tcp-echo
+      containers:
+      - name: tcp-echo-server
+        image: "draychev/tcp-echo-server:latest-main"
+        imagePullPolicy: Always
+        command: ["/tcp-echo-server"]
+        args: [ "--port", "9000" ]
+        ports:
+        - containerPort: 9000
+          name: tcp-echo-server
