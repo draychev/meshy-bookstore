@@ -22,3 +22,44 @@ clean:
 # Set the default target to build all commands
 .PHONY: all $(COMMANDS) clean
 all: $(COMMANDS)
+
+# Define the binaries and corresponding Docker image names
+BINARIES := bookbuyer bookstore bookwarehouse bookthief bookwatcher
+DOCKER_USER := draychev
+
+# Build Docker images for each binary
+.PHONY: build-images
+build-images: $(BINARIES:%=build-%)
+
+$(BINARIES:%=build-%): build-%:
+	@echo "Building Docker image for $*"
+	docker build -t $(DOCKER_USER)/$*:latest -f Dockerfile.$* .
+
+# Push Docker images to Docker Hub
+.PHONY: push-images
+push-images: $(BINARIES:%=push-%)
+
+$(BINARIES:%=push-%): push-%: build-%
+	@echo "Pushing Docker image for $* to Docker Hub"
+	docker push $(DOCKER_USER)/$*:latest
+
+# A general rule for building each binary's Dockerfile
+.PHONY: build-bookbuyer build-bookstore build-bookwarehouse build-bookthief build-bookwatcher
+build-bookbuyer: Dockerfile.bookbuyer
+build-bookstore: Dockerfile.bookstore
+build-bookwarehouse: Dockerfile.bookwarehouse
+build-bookthief: Dockerfile.bookthief
+build-bookwatcher: Dockerfile.bookwatcher
+
+# A general rule for Dockerfiles
+Dockerfile.%:
+	@echo "Creating Dockerfile for $*"
+	@echo "FROM golang:latest" > Dockerfile.$*
+	@echo "COPY ./bin/$* /$*" >> Dockerfile.$*
+	@echo 'ENTRYPOINT ["/$*"]' >> Dockerfile.$*
+
+# Cleanup generated Dockerfiles (optional)
+.PHONY: clean
+clean:
+	@echo "Cleaning up generated Dockerfiles"
+	rm -f Dockerfile.bookbuyer Dockerfile.bookstore Dockerfile.bookwarehouse Dockerfile.bookthief Dockerfile.bookwatcher
