@@ -31,7 +31,7 @@ spec:
       serviceAccountName: tcp-client
       containers:
       - name: tcp-client
-        image: "draychev/tcp-client:latest-main"
+        image: "draychev/tcp-client:latest"
         imagePullPolicy: Always
         command: ["/tcp-client"]
         args: [ "--server-address", "tcp-echo:9000" ]

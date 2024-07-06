@@ -49,7 +49,7 @@ spec:
       serviceAccountName: tcp-echo
       containers:
       - name: tcp-echo-server
-        image: "draychev/tcp-echo-server:latest-main"
+        image: "draychev/tcp-echo-server:latest"
         imagePullPolicy: Always
         command: ["/tcp-echo-server"]
         args: [ "--port", "9000" ]

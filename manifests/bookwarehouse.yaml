@@ -47,6 +47,6 @@ spec:
         kubernetes.io/os: linux
       containers:
         - name: bookwarehouse
-          image: draychev/bookwarehouse:latest-main
+          image: draychev/bookwarehouse:latest
           imagePullPolicy: Always
           command: ["/bookwarehouse"]

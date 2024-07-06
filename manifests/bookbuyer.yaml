@@ -31,7 +31,7 @@ spec:
         kubernetes.io/os: linux
       containers:
         - name: bookbuyer
-          image: draychev/bookbuyer:latest-main
+          image: draychev/bookbuyer:latest
           imagePullPolicy: Always
           command: ["/bookbuyer"]
           env:
