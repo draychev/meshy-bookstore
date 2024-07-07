@@ -51,16 +51,23 @@ func setHeaders(w http.ResponseWriter, r *http.Request) {
 func restockBooks(w http.ResponseWriter, r *http.Request) {
 	setHeaders(w, r)
 	var numberOfBooks int
-	err := json.NewDecoder(r.Body).Decode(&numberOfBooks)
-	if err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&numberOfBooks); err != nil {
 		log.Error().Err(err).Msg("Could not decode request body")
-		numberOfBooks = 0
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	// Check if numberOfBooks is divisible by 3 and return 500 ISE if true
+	if numberOfBooks%3 == 0 {
+		log.Error().Msgf("Number of books %d is divisible by 3 -- forcing an error", numberOfBooks)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
 	}
 
 	totalBooks := database.Update(numberOfBooks)
-
 	_, _ = w.Write([]byte(fmt.Sprintf("{\"restocked\":%d}", numberOfBooks)))
 	log.Info().Msgf("Restocking bookstore with %d new books; Total so far: %d", numberOfBooks, totalBooks)
+
 	if totalBooks >= 3 {
 		fmt.Println(common.Success)
 	}
