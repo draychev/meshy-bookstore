@@ -34,4 +34,4 @@ spec:
         image: "draychev/tcp-client:latest"
         imagePullPolicy: Always
         command: ["/tcp-client"]
-        args: [ "--server-address", "tcp-echo-server.tcp-echo-server.cluster.local:9000" ]
+        args: [ "--server-address", "tcp-echo-server.tcp-echo-server.svc.cluster.local:9000" ]
