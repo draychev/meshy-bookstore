@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/gorilla/mux"
 	"gorm.io/gorm"
@@ -26,16 +25,6 @@ var (
 	db       *gorm.DB
 )
 
-// Record stores key value pairs
-type Record struct {
-	Key      string `gorm:"primaryKey"`
-	ValueInt int64
-}
-
-const (
-	keyTotalBooks = "total-books"
-)
-
 func getIdentity() string {
 	ident := os.Getenv("IDENTITY")
 	if ident == "" {
@@ -46,9 +35,9 @@ func getIdentity() string {
 	return ident
 }
 
-func getBooksStockedRecord() Record {
-	var record Record
-	db.Where(&Record{Key: keyTotalBooks}).First(&record)
+func getBooksStockedRecord() database.Record {
+	var record database.Record
+	db.Where(&database.Record{Key: database.KeyTotalBooks}).First(&record)
 	return record
 }
 
@@ -88,43 +77,10 @@ func restockBooks(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func initDb() {
-	log.Info().Msg("Initializig database...")
-	var err error
-	for {
-		db, err = database.GetMySQLConnection()
-
-		if err != nil {
-			log.Info().Msg("Booksdemo database is not ready. Wait for 10s ...")
-			time.Sleep(10 * time.Second)
-		} else {
-			break
-		}
-	}
-
-	log.Info().Msg("Booksdemo database is connected.")
-	err = db.Migrator().AutoMigrate(&Record{})
-	if err != nil {
-		log.Fatal().Msgf("Database migration failed. %v", err)
-	}
-
-	var record Record
-	if result := db.Where(&Record{Key: keyTotalBooks}).First(&record); result.RowsAffected == 0 {
-		// initialize record
-		record = Record{
-			Key:      keyTotalBooks,
-			ValueInt: 0,
-		}
-
-		result = db.Create(&record)
-		log.Info().Msgf("Initial %s record created. %v, %v, %v", keyTotalBooks, record, result.RowsAffected, result.Error)
-	}
-}
-
 func main() {
 	flag.Parse()
 
-	initDb()
+	db = database.Init()
 
 	//initializing router
 	router := mux.NewRouter()
