@@ -10,7 +10,6 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/draychev/go-toolbox/pkg/envvar"
-	"github.com/rs/zerolog/log"
 )
 
 // Refer to https://github.com/openservicemesh/osm-docs/blob/main/manifests/apps/mysql.yaml for database setup
