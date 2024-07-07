@@ -34,7 +34,6 @@ func GetMySQLConnection() (*gorm.DB, error) {
 
 func Init() {
 	log.Info().Msg("Initializig database...")
-	var db *gorm.DB
 	var err error
 	for {
 		if db, err = GetMySQLConnection(); err != nil {
@@ -63,15 +62,10 @@ func Init() {
 	}
 }
 
-func GetBooksStockedRecord() Record {
+func Update(numberOfBooks int) int {
 	var record Record
 	db.Where(&Record{Key: KeyTotalBooks}).First(&record)
 	log.Info().Msgf("Fetching Books Stock Record: %+v", record)
-	return record
-}
-
-func Update(numberOfBooks int) int {
-	record := GetBooksStockedRecord()
 	record.ValueInt += int64(numberOfBooks)
 	totalBooks := int(record.ValueInt)
 	db.Save(record)
