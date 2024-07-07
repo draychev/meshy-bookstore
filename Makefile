@@ -8,7 +8,6 @@ BIN_DIR := ./bin
 BINARIES := bookbuyer bookstore bookwarehouse bookthief bookstore-tcp-client bookstore-tcp-echo-server
 DOCKER_USER := draychev
 
-
 # Ensure the output directory exists
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
