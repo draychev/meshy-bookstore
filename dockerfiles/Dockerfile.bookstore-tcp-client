@@ -19,10 +19,10 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /
 
 # Copy the binary into the container
-COPY ./bin/tcp-client /tcp-client
+COPY ./bin/bookstore-tcp-client /bookstore-tcp-client
 
 # Expose any required ports (optional, adjust as needed)
 # EXPOSE 8080
 
 # Define the command to run the binary
-ENTRYPOINT ["/tcp-client"]
+ENTRYPOINT ["/bookstore-tcp-client"]
