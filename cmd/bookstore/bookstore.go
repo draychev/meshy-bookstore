@@ -17,8 +17,8 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/draychev/meshy-bookstore/pkg/common"
 	"github.com/draychev/go-toolbox/pkg/logger"
+	"github.com/draychev/meshy-bookstore/pkg/common"
 )
 
 var (
