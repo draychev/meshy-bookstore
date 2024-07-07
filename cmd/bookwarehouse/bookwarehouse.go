@@ -60,9 +60,9 @@ func restockBooks(w http.ResponseWriter, r *http.Request) {
 
 	currentTimestamp := time.Now().Unix()
 
-	// Check if numberOfBooks and current timestamp are both divisible by 3
+	// Check if numberOfBooks and current timestamp are both divisible by 2
 	// and return 500 ISE if true
-	if numberOfBooks%3 == 0 && currentTimestamp%3 == 0 {
+	if numberOfBooks%2 == 0 && currentTimestamp%2 == 0 {
 		log.Error().Msgf("Number of books %d is divisible by 3 -- forcing an error", numberOfBooks)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
