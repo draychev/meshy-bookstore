@@ -48,9 +48,3 @@ push-images: $(BINARIES:%=push-%)
 $(BINARIES:%=push-%): push-%: build-%
 	@echo "Pushing Docker image for $* to Docker Hub"
 	docker push $(DOCKER_USER)/$*:latest
-
-# Cleanup generated Dockerfiles (optional)
-.PHONY: clean
-clean:
-	@echo "Cleaning up generated Dockerfiles"
-	rm -f Dockerfile.bookbuyer Dockerfile.bookstore Dockerfile.bookwarehouse Dockerfile.bookthief
