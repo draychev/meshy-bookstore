@@ -5,7 +5,7 @@ SRC_DIR := ./cmd
 BIN_DIR := ./bin
 
 # List of all commands
-COMMANDS := bookbuyer bookstore bookwarehouse bookthief bookwatcher tcp-client tcp-echo-server
+COMMANDS := bookbuyer bookstore bookwarehouse bookthief tcp-client tcp-echo-server
 
 # Ensure the output directory exists
 $(BIN_DIR):
@@ -24,7 +24,7 @@ clean:
 all: $(COMMANDS)
 
 # Define the binaries and corresponding Docker image names
-BINARIES := bookbuyer bookstore bookwarehouse bookthief bookwatcher
+BINARIES := bookbuyer bookstore bookwarehouse bookthief
 DOCKER_USER := draychev
 
 # Build Docker images for each binary
@@ -55,4 +55,4 @@ $(BINARIES:%=push-%): push-%: build-%
 .PHONY: clean
 clean:
 	@echo "Cleaning up generated Dockerfiles"
-	rm -f Dockerfile.bookbuyer Dockerfile.bookstore Dockerfile.bookwarehouse Dockerfile.bookthief Dockerfile.bookwatcher
+	rm -f Dockerfile.bookbuyer Dockerfile.bookstore Dockerfile.bookwarehouse Dockerfile.bookthief
