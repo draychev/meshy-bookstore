@@ -55,4 +55,4 @@ spec:
         args: [ "--port", "9000" ]
         ports:
         - containerPort: 9000
-          name: bookstore-tcp-echo-server
+          name: tcp-echo-server
