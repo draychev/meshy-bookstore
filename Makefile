@@ -40,11 +40,3 @@ push-images: $(BINARIES:%=push-%)
 $(BINARIES:%=push-%): push-%: build-%
 	@echo "Pushing Docker image for $* to Docker Hub"
 	docker push $(DOCKER_USER)/$*:latest
-
-# Push Docker images to Docker Hub
-.PHONY: push-images
-push-images: $(BINARIES:%=push-%)
-
-$(BINARIES:%=push-%): push-%: build-%
-	@echo "Pushing Docker image for $* to Docker Hub"
-	docker push $(DOCKER_USER)/$*:latest
