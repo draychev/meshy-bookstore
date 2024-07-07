@@ -61,7 +61,7 @@ func restockBooks(w http.ResponseWriter, r *http.Request) {
 	currentTimestamp := time.Now().Unix()
 
 	if currentTimestamp%3 == 0 {
-		log.Error().Msgf("Currente timestamp %d is divisible by 3 -- forcing an error", currentTimestamp)
+		log.Error().Msgf("Current timestamp %d is divisible by 3 -- forcing an error", currentTimestamp)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
