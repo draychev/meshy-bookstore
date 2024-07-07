@@ -2,7 +2,7 @@
 
 set -aueo pipefail
 
-NAMESPACES=("bookbuyer" "bookstore" "bookthief" "bookwarehouse" "tcp-client" "tcp-echo-server")
+NAMESPACES=("bookbuyer" "bookstore" "bookthief" "bookwarehouse" "bookstore-tcp-client" "bookstore-tcp-echo-server")
 
 for ns in "${NAMESPACES[@]}"; do
     kubectl create namespace $ns || true

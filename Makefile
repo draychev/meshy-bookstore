@@ -5,7 +5,7 @@ SRC_DIR := ./cmd
 BIN_DIR := ./bin
 
 # Define the binaries and corresponding Docker image names
-BINARIES := bookbuyer bookstore bookwarehouse bookthief tcp-client tcp-echo-server
+BINARIES := bookbuyer bookstore bookwarehouse bookthief bookstore-tcp-client bookstore-tcp-echo-server
 DOCKER_USER := draychev
 
 

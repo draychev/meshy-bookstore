@@ -1,0 +1,37 @@
+# Create bookstore-tcp-client service account
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookstore-tcp-client
+  namespace: bookstore-tcp-client
+
+---
+
+# Create bookstore-tcp-client deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-tcp-client-v1
+  namespace: bookstore-tcp-client
+  labels:
+    app: bookstore-tcp-client
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookstore-tcp-client
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: bookstore-tcp-client
+        version: v1
+    spec:
+      serviceAccountName: bookstore-tcp-client
+      containers:
+      - name: bookstore-tcp-client
+        image: "draychev/bookstore-tcp-client:latest"
+        imagePullPolicy: Always
+        command: ["/bookstore-tcp-client"]
+        args: [ "--server-address", "bookstore-tcp-echo-server.bookstore-tcp-echo-server.svc.cluster.local:9000" ]

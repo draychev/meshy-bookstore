@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	log            = logger.NewPretty("tcp-echo-server")
+	log            = logger.NewPretty("bookstore-tcp-echo-server")
 	logLevel       = flag.String("logLevel", "debug", "Log output level")
 	port           = flag.Int("port", 9090, "port on which this app is serving TCP connections")
 	responsePrefix = "echo response:"

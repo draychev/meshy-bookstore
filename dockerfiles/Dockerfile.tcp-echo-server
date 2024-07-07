@@ -19,10 +19,10 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /
 
 # Copy the binary into the container
-COPY ./bin/tcp-echo-server /tcp-echo-server
+COPY ./bin/bookstore-tcp-echo-server /bookstore-tcp-echo-server
 
 # Expose any required ports (optional, adjust as needed)
 # EXPOSE 8080
 
 # Define the command to run the binary
-ENTRYPOINT ["/tcp-echo-server"]
+ENTRYPOINT ["/bookstore-tcp-echo-server"]

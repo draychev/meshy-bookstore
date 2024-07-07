@@ -2,17 +2,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: tcp-echo-server
-  namespace: tcp-echo-server
+  name: bookstore-tcp-echo-server
+  namespace: bookstore-tcp-echo-server
   labels:
-    app: tcp-echo-server
+    app: bookstore-tcp-echo-server
 spec:
   ports:
   - name: tcp
     port: 9000
     appProtocol: tcp
   selector:
-    app: tcp-echo-server
+    app: bookstore-tcp-echo-server
 
 ---
 
@@ -20,8 +20,8 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: tcp-echo-server
-  namespace: tcp-echo-server
+  name: bookstore-tcp-echo-server
+  namespace: bookstore-tcp-echo-server
 
 ---
 
@@ -30,29 +30,29 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tcp-echo-v1
-  namespace: tcp-echo-server
+  namespace: bookstore-tcp-echo-server
   labels:
-    app: tcp-echo-server
+    app: bookstore-tcp-echo-server
     version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tcp-echo-server
+      app: bookstore-tcp-echo-server
       version: v1
   template:
     metadata:
       labels:
-        app: tcp-echo-server
+        app: bookstore-tcp-echo-server
         version: v1
     spec:
-      serviceAccountName: tcp-echo-server
+      serviceAccountName: bookstore-tcp-echo-server
       containers:
-      - name: tcp-echo-server
-        image: "draychev/tcp-echo-server:latest"
+      - name: bookstore-tcp-echo-server
+        image: "draychev/bookstore-tcp-echo-server:latest"
         imagePullPolicy: Always
-        command: ["/tcp-echo-server"]
+        command: ["/bookstore-tcp-echo-server"]
         args: [ "--port", "9000" ]
         ports:
         - containerPort: 9000
-          name: tcp-echo-server
+          name: bookstore-tcp-echo-server
