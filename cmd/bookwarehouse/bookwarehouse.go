@@ -11,7 +11,6 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
-	"gorm.io/gorm"
 
 	"github.com/draychev/go-toolbox/pkg/logger"
 	"github.com/draychev/meshy-bookstore/pkg/common"
@@ -22,7 +21,6 @@ var (
 	log      = logger.NewPretty("bookwarehouse")
 	identity = flag.String("ident", "unidentified", "the identity of the container where this demo app is running (VM, K8s, etc)")
 	port     = flag.Int("port", 14001, "port on which this app is listening for incoming HTTP")
-	db       *gorm.DB
 )
 
 func getIdentity() string {
@@ -33,12 +31,6 @@ func getIdentity() string {
 		}
 	}
 	return ident
-}
-
-func getBooksStockedRecord() database.Record {
-	var record database.Record
-	db.Where(&database.Record{Key: database.KeyTotalBooks}).First(&record)
-	return record
 }
 
 func setHeaders(w http.ResponseWriter, r *http.Request) {
@@ -65,10 +57,7 @@ func restockBooks(w http.ResponseWriter, r *http.Request) {
 		numberOfBooks = 0
 	}
 
-	record := getBooksStockedRecord()
-	record.ValueInt += int64(numberOfBooks)
-	totalBooks := int(record.ValueInt)
-	db.Save(record)
+	totalBooks := database.Update(numberOfBooks)
 
 	_, _ = w.Write([]byte(fmt.Sprintf("{\"restocked\":%d}", numberOfBooks)))
 	log.Info().Msgf("Restocking bookstore with %d new books; Total so far: %d", numberOfBooks, totalBooks)
@@ -80,7 +69,7 @@ func restockBooks(w http.ResponseWriter, r *http.Request) {
 func main() {
 	flag.Parse()
 
-	db = database.Init()
+	database.Init()
 
 	//initializing router
 	router := mux.NewRouter()

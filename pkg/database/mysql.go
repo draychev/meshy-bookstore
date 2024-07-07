@@ -20,6 +20,8 @@ const (
 	dbname = "booksdemo"
 )
 
+var db *gorm.DB
+
 // GetMySQLConnection returns a MySQL connection using default configuration
 func GetMySQLConnection() (*gorm.DB, error) {
 	mySQLHost := envvar.GetEnv("MYSQL_HOST", "mysql.bookwarehouse.svc.cluster.local")
@@ -30,7 +32,7 @@ func GetMySQLConnection() (*gorm.DB, error) {
 	return db, err
 }
 
-func Init() *gorm.DB {
+func Init() {
 	log.Info().Msg("Initializig database...")
 	var db *gorm.DB
 	var err error
@@ -59,5 +61,19 @@ func Init() *gorm.DB {
 		result = db.Create(&record)
 		log.Info().Msgf("Initial %s record created. %v, %v, %v", KeyTotalBooks, record, result.RowsAffected, result.Error)
 	}
-	return db
+}
+
+func GetBooksStockedRecord() Record {
+	var record Record
+	db.Where(&Record{Key: KeyTotalBooks}).First(&record)
+	log.Info().Msgf("Fetching Books Stock Record: %+v", record)
+	return record
+}
+
+func Update(numberOfBooks int) int {
+	record := GetBooksStockedRecord()
+	record.ValueInt += int64(numberOfBooks)
+	totalBooks := int(record.ValueInt)
+	db.Save(record)
+	return totalBooks
 }
