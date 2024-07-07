@@ -100,13 +100,16 @@ func updateBooksSold(w http.ResponseWriter, r *http.Request) {
 	log.Info().Msgf("%s;  URL: %q;  %s: %d\n", getIdentity(), html.EscapeString(r.URL.Path), common.BooksBoughtHeader, books.BooksSold)
 }
 
+const latency = 500
+
 // sellBook increments the value of the booksSold
 func sellBook(w http.ResponseWriter, r *http.Request) {
 	currentTimestamp := time.Now().Unix()
 
 	// Force artificial delay.
 	if currentTimestamp%3 == 0 {
-		time.Sleep(500 * time.Millisecond)
+		time.Sleep(latency * time.Millisecond)
+		log.Warn().Msgf("Since current timestapm %d is divisible by 3, we will add %d", currentTimestamp, latency)
 	}
 
 	fmt.Println("Selling a book!")
