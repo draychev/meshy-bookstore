@@ -102,6 +102,13 @@ func updateBooksSold(w http.ResponseWriter, r *http.Request) {
 
 // sellBook increments the value of the booksSold
 func sellBook(w http.ResponseWriter, r *http.Request) {
+	currentTimestamp := time.Now().Unix()
+
+	// Force artificial delay.
+	if currentTimestamp%3 == 0 {
+		time.Sleep(500 * time.Millisecond)
+	}
+
 	fmt.Println("Selling a book!")
 	atomic.AddInt64(&books.BooksSold, 1)
 	tracingHeaders := common.GetTracingHeaders(r)
